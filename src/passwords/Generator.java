@@ -11,11 +11,9 @@ import java.util.Scanner;
 public class Generator {
 
     Alphabet alphabet;
-    String response;
     int size;
     final int DEFAULT_SIZE = 15;
     boolean upperLetters = false, lowerLetters = false, digits = false, symbols = false, customPass=false;
-
 
     public Generator(int size, boolean customPass){
         this.size = size;
@@ -25,7 +23,7 @@ public class Generator {
         this.size = size;
     }
     public Generator(){
-        size = DEFAULT_SIZE;
+        this.size = DEFAULT_SIZE;
     }
     /**
      *
@@ -35,9 +33,9 @@ public class Generator {
      *
      * @return the final generated password
      */
-    public String getPassword(){
+    public String getPassword(Scanner keyboard){
 
-        getPasswordInfo();
+        getPasswordInfo(keyboard);
 
         alphabet = new Alphabet(upperLetters, lowerLetters, digits, symbols);
         String allowedChars = alphabet.getAllowedChars();
@@ -51,45 +49,30 @@ public class Generator {
      * it asks questions about the size, whether it should contain digits, symbols, letters.
      *
      */
-    private void getPasswordInfo(){
-        Scanner keyboard = new Scanner(System.in);
+    private void getPasswordInfo(Scanner keyboard){
         if(!customPass){
             upperLetters = lowerLetters = digits = symbols = true;
         } else{
-            System.out.print("All types of characters? (Y/n) ");
-            response = keyboard.nextLine();
-
-            if(response.equals("y") || response.equals("Y")){
-                upperLetters = lowerLetters = digits = symbols = true;
-            }else{
-                System.out.print("Upper letters? (Y/n) ");
-                response = keyboard.nextLine();
-                if(response.equals("y") || response.equals("Y")){
-                    upperLetters = true;
-                }
-
-                System.out.print("Lower letters? (Y/n) ");
-                response = keyboard.nextLine();
-                if(response.equals("y") || response.equals("Y")){
-                    lowerLetters = true;
-                }
-
-                System.out.print("Digits? (Y/n) ");
-                response = keyboard.nextLine();
-                if(response.equals("y") || response.equals("Y")){
-                    digits = true;
-                }
-
-                System.out.print("Symbols? (Y/n) ");
-                response = keyboard.nextLine();
-                if(response.equals("y") || response.equals("Y")){
-                    symbols = true;
-                }
+            upperLetters = askYesNoQuestion("Upper letters?", keyboard);
+            lowerLetters = askYesNoQuestion("Lower letters?", keyboard);
+            digits = askYesNoQuestion("Digits?", keyboard);
+            symbols = askYesNoQuestion("Symbols?", keyboard);
+            if(!upperLetters && !lowerLetters && !digits && !symbols){
+                System.out.println("Password must contain something!");
+                getPassword(keyboard);
             }
         }
+    }
 
-
-
+    /**
+     * Gets the answer of the user at the given question.
+     * @param question the given question
+     * @param keyboard the scanner to get the input
+     * @return true if the user types Y/y; false otherwise
+     */
+    private boolean askYesNoQuestion(String question, Scanner keyboard){
+        System.out.print(question + " (Y/n) ");
+        return keyboard.nextLine().equalsIgnoreCase("y");
     }
 
     /**
@@ -103,12 +86,24 @@ public class Generator {
     private String buildPassword(String allowedChars){
         StringBuilder password = new StringBuilder();
 
+        // build the password with random characters in the allowed string
         for(int i = 0; i<size; i++){
             int index = (new Random()).nextInt(allowedChars.length());
-
             password.append(allowedChars.charAt(index));
         }
 
+        Checker checker = new Checker(password.toString());
+        Category passCategory = checker.checkPassword();
+
+        // it's not possible to generate something very strong when the user wants a password
+        // with a small size and without letters/digits/symbols
+        if(!customPass && size >= 12){
+            // check if the generated password is good, if not generate it again
+            if(passCategory == Category.STRONG || passCategory == Category.VERY_STRONG){
+                return password.toString();
+            }
+            return buildPassword(allowedChars);
+        }
         return password.toString();
     }
 
