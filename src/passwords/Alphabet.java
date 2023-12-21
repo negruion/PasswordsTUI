@@ -1,5 +1,11 @@
 package passwords;
 
+/**
+ * The Alphabet Class creates a string with all the allowed characters to be used in the password
+ * generation process.
+ *
+ * @author Ion Negru
+ */
 public class Alphabet {
 
     private static final String UPPERCASE_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -13,13 +19,21 @@ public class Alphabet {
 
         allowedChars = new StringBuilder();
 
-        if(upperLetters) allowedChars.append(UPPERCASE_LETTERS);
+        if(upperLetters) {
+            allowedChars.append(UPPERCASE_LETTERS);
+        }
 
-        if(lowerLetters) allowedChars.append(LOWERCASE_LETTERS);
+        if(lowerLetters) {
+            allowedChars.append(LOWERCASE_LETTERS);
+        }
 
-        if(digits) allowedChars.append(DIGITS);
+        if(digits) {
+            allowedChars.append(DIGITS);
+        }
 
-        if(symbols) allowedChars.append(SYMBOLS);
+        if(symbols) {
+            allowedChars.append(SYMBOLS);
+        }
 
     }
 
