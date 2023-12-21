@@ -77,7 +77,6 @@ public class Checker {
      */
     private Category getCategory(){
         calculateScore();
-        System.out.println(score);
         if(score >= .9){
             return Category.VERY_STRONG;
         }

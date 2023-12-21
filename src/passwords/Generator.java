@@ -104,7 +104,7 @@ public class Generator {
         StringBuilder password = new StringBuilder();
 
         for(int i = 0; i<size; i++){
-            int index = (new Random()).nextInt(allowedChars.length() + 1);
+            int index = (new Random()).nextInt(allowedChars.length());
 
             password.append(allowedChars.charAt(index));
         }
