@@ -3,14 +3,30 @@ package passwords;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * The Generator Class generates a password according to specific requirements.
+ *
+ * @author Ion Negru
+ */
 public class Generator {
 
     Alphabet alphabet;
     String response;
     int size;
-    boolean upperLetters = false, lowerLetters = false, digits = false, symbols = false;
+    final int DEFAULT_SIZE = 15;
+    boolean upperLetters = false, lowerLetters = false, digits = false, symbols = false, customPass=false;
 
 
+    public Generator(int size, boolean customPass){
+        this.size = size;
+        this.customPass = customPass;
+    }
+    public Generator(int size){
+        this.size = size;
+    }
+    public Generator(){
+        size = DEFAULT_SIZE;
+    }
     /**
      *
      * Creates a new string with specific allowed characters, and creates a password with
@@ -37,43 +53,41 @@ public class Generator {
      */
     private void getPasswordInfo(){
         Scanner keyboard = new Scanner(System.in);
-
-        System.out.print("How many characters? ");
-        size = keyboard.nextInt();
-
-        // consume the remaining newline character in the buffer
-        keyboard.nextLine();
-
-        System.out.print("All types of characters? (Y/n) ");
-        response = keyboard.nextLine();
-
-        if(response.equals("y") || response.equals("Y")){
+        if(!customPass){
             upperLetters = lowerLetters = digits = symbols = true;
-        }else{
-            System.out.print("Upper letters? (Y/n) ");
+        } else{
+            System.out.print("All types of characters? (Y/n) ");
             response = keyboard.nextLine();
-            if(response.equals("n") || response.equals("N")){
-                upperLetters = true;
-            }
 
-            System.out.print("Lower letters? (Y/n) ");
-            response = keyboard.nextLine();
             if(response.equals("y") || response.equals("Y")){
-                lowerLetters = true;
-            }
+                upperLetters = lowerLetters = digits = symbols = true;
+            }else{
+                System.out.print("Upper letters? (Y/n) ");
+                response = keyboard.nextLine();
+                if(response.equals("y") || response.equals("Y")){
+                    upperLetters = true;
+                }
 
-            System.out.print("Digits? (Y/n) ");
-            response = keyboard.nextLine();
-            if(response.equals("y") || response.equals("Y")){
-                digits = true;
-            }
+                System.out.print("Lower letters? (Y/n) ");
+                response = keyboard.nextLine();
+                if(response.equals("y") || response.equals("Y")){
+                    lowerLetters = true;
+                }
 
-            System.out.print("Symbols? (Y/n) ");
-            response = keyboard.nextLine();
-            if(response.equals("n") || response.equals("N")){
-                symbols = true;
+                System.out.print("Digits? (Y/n) ");
+                response = keyboard.nextLine();
+                if(response.equals("y") || response.equals("Y")){
+                    digits = true;
+                }
+
+                System.out.print("Symbols? (Y/n) ");
+                response = keyboard.nextLine();
+                if(response.equals("y") || response.equals("Y")){
+                    symbols = true;
+                }
             }
         }
+
 
 
     }
