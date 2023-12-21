@@ -75,12 +75,17 @@ public class App {
         Generator generator;
         if(lineSize==2 || lineSize == 3){
             parameter = line[1];
-            generator =  new Generator(Integer.parseInt(parameter), lineSize==3);
+            try {
+                generator = new Generator(Integer.parseInt(parameter), lineSize == 3);
+            }catch (NumberFormatException e){
+                System.out.println("Enter a valid size!");
+                return;
+            }
         } else{
             generator = new Generator();
         }
 
-        System.out.println("Generated Password: " + generator.getPassword());
+        System.out.println("Generated Password: " + generator.getPassword(keyboard));
     }
 
     /** Checks the given password and displays a message with the category of the password. */
@@ -93,7 +98,6 @@ public class App {
         parameter = line[1];
         checker = new Checker(parameter);
         displayPasswordCategory(checker.checkPassword());
-
     }
 
     /**
