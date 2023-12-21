@@ -79,8 +79,10 @@ public class Generator {
     }
 
     /**
+     *
      * Generates a password based on a given string with all the allowed characters.
      * The method adds a specific number of characters, each determined at random.
+     *
      * @param allowedChars a string with all the allowed character by the user
      * @return the newly generated password
      */
