@@ -23,14 +23,7 @@ public class Alphabet {
 
     }
 
-    /**
-     * Gets the allowedChars StringBuilder and returns it as a string.
-     * @return a string with all allowed characters
-     */
     public String getAllowedChars(){
-        // it cannot return the string if it's not initialized
-        assert this.allowedChars != null;
-
         return this.allowedChars.toString();
     }
 
