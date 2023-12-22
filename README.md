@@ -32,17 +32,22 @@ PasswordsTUI is a simple Java-based command-line utility that provides functiona
    ```bash
    git clone https://github.com/negruion/PasswordsTUI.git
 
-2. Compile the Java file:
-
-    ```bash
-    javac PasswordsTUI.java
-
-3. Run the application:
+2. Go to src directory:
 
    ```bash
-   java PasswordsTUI
+   cd src
 
-4. Follow the on-screen instructions to generate or check passwords.
+3. Compile the Java file:
+
+    ```bash
+    javac App.java
+
+4. Run the application:
+
+   ```bash
+   java App
+
+5. Follow the on-screen instructions to generate or check passwords.
 
  ## Acknowledgments
  - **Built with ❤️ by Ion Negru.**
